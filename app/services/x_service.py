@@ -4,10 +4,19 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 import time
 import random
+from dotenv import load_dotenv
+import os
+
 
 # Ruta al GeckoDriver
 driver_path = "C:/webdrivers/geckodriver.exe"  # Cambia según tu configuración
 service = Service(executable_path=driver_path)
+
+# Cargar las variables de entorno desde el archivo .env
+load_dotenv('secrets.env')
+# Acceder a la clave de X
+CLAVE_X = os.getenv('CLAVE_X')
+
 
 # Función para limpiar comentarios
 def clean_comment(comment):
@@ -70,7 +79,7 @@ def get_x_comments(presidente, tema, max_comments):
         time.sleep(5)
 
         password_field = driver.find_element(By.NAME, "password")
-        password_field.send_keys("clave1234")  # Reemplaza con tu contraseña
+        password_field.send_keys(CLAVE_X)  # Reemplaza con tu contraseña
         time.sleep(random.uniform(2, 4))
         password_field.send_keys(Keys.RETURN)
         time.sleep(5)

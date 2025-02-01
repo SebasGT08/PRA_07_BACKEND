@@ -43,7 +43,15 @@ def get_comments_from_post(post_url, max_comments):
 
         # Encontrar los comentarios
         comment_elements = soup.find_all("div", class_="md")  # Clase que contiene los comentarios
-        comments = [comment.get_text(strip=True) for comment in comment_elements[:max_comments]]
+        
+        # Filtrar comentarios eliminados y omitir el primer comentario
+        comments = []
+        for comment in comment_elements[1:]:  # Omitir el primer comentario
+            comment_text = comment.get_text(strip=True)
+            if comment_text != "[deleted]" and comment_text != "[removed]":
+                comments.append(comment_text)
+            if len(comments) >= max_comments:
+                break  # Limitar a max_comments por publicación
 
         return comments
     except Exception as e:
@@ -59,8 +67,8 @@ def get_comments(presidente, tema, max_comments):
 
     # Obtener comentarios de los primeros posts encontrados
     all_comments = []
-    for post_link in post_links[:3]:  # Limitar a los primeros 3 posts para no sobrecargar
-        comments = get_comments_from_post(post_link, max_comments)
+    for post_link in post_links[:5]:  # Limitar a los primeros 3 posts para no sobrecargar
+        comments = get_comments_from_post(post_link, 10)  # Limitar a 5 comentarios por publicación
         all_comments.extend(comments)
         if len(all_comments) >= max_comments:
             break  # Detener si ya tenemos suficientes comentarios

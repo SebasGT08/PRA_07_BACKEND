@@ -7,12 +7,11 @@ BASE_URL = "https://www.googleapis.com/youtube/v3"
 SEARCH_URL = f"{BASE_URL}/search"  # Para buscar videos
 COMMENT_THREADS_URL = f"{BASE_URL}/commentThreads"  # Para obtener comentarios
 
-# Tu clave API de YouTube
 # Cargar las variables de entorno desde el archivo .env
 load_dotenv('secrets.env')
 # Acceder a la API key
 api_key = os.getenv('API_KEY')
-API_KEY = api_key   # Reemplaza con tu clave API
+API_KEY = api_key
 
 # Función para buscar videos en YouTube
 def search_youtube_videos(query, max_results=5):
