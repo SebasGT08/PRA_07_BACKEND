@@ -1,0 +1,5 @@
+
+# Ignorar cualquier carpeta __pycache__
+__pycache__/
+
+secrets.env
