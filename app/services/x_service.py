@@ -78,6 +78,12 @@ def get_x_comments(presidente, tema, max_comments):
         username_field.send_keys(Keys.RETURN)
         time.sleep(5)
 
+        username_field = driver.find_element(By.NAME, "text")
+        username_field.send_keys("Sebas_08_2002")  # Reemplaza con tu usuario
+        time.sleep(random.uniform(2, 4))
+        username_field.send_keys(Keys.RETURN)
+        time.sleep(5)
+
         password_field = driver.find_element(By.NAME, "password")
         password_field.send_keys(CLAVE_X)  # Reemplaza con tu contraseña
         time.sleep(random.uniform(2, 4))

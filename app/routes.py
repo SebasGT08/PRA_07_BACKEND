@@ -33,7 +33,7 @@ def analyze():
         analyzed_comments = []
         for i, comment_data in enumerate(processed_comments):
             comentario = comment_data["comentario_limpio"]
-            sentimiento = clasificar_sentimiento(comentario)
+            sentimiento = clasificar_sentimiento(comentario, presidente)
             comment_data["sentimiento"] = sentimiento
             analyzed_comments.append(comment_data)
             yield json.dumps({
