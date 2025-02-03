@@ -7,9 +7,9 @@ from nltk.corpus import stopwords
 from langdetect import detect  # Asegúrate de tener instalada la librería: pip install langdetect
 
 # Descarga de recursos necesarios de NLTK
-nltk.download('stopwords')
-nltk.download('punkt')
-nltk.download('punkt_tab')  # Agregado para tokenización en español
+# nltk.download('stopwords')
+# nltk.download('punkt')
+# nltk.download('punkt_tab') 
 
 # Función auxiliar para traducir el texto, manejando el límite de 5000 caracteres
 def translate_text(text, source_lang='auto', target_lang='es'):
