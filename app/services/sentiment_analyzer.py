@@ -15,7 +15,7 @@ def clasificar_sentimiento(comentario, presidente, model):
     # Crear el mensaje con instrucciones claras para el modelo
     mensaje = {
         'role': 'user',
-        'content': f"Tu objetivo es clasificar comentarios hacia al presidente {presidente}. Si el comentario no menciona a {presidente}, analiza el tono general del comentario. Si lo menciona, analiza la parte que mencione al presidente {presidente} y responde '1' si es positivo, '2' si es negativo, o '3' si es neutral. Ignora palabras o frases que puedan parecer negativas si la parte en que se habla de {presidente} es positivo. No des explicaciones, solo responde con '1', '2', '3' o '4'. El comentario es: '{comentario}'"
+        'content': f"Tu objetivo es clasificar comentarios hacia al presidente {presidente}. Si el comentario no menciona a {presidente}, analiza el tono general del comentario. Si lo menciona, analiza la parte que mencione al presidente {presidente} y responde '1' si es positivo, '2' si es negativo, '3' si es neutral y '4' si no es ninguno. Ignora palabras o frases que puedan parecer negativas si la parte en que se habla de {presidente} es positivo. No des explicaciones, solo responde con '1', '2', '3' o '4'. El comentario es: '{comentario}'"
     }
 
     # Realizar la consulta al modelo

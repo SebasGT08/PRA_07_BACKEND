@@ -23,9 +23,15 @@ def analyze():
         print(f"{len(comments)} comentarios obtenidos.")
         yield json.dumps({"status": f"{len(comments)} comentarios obtenidos."}) + "\n"
 
-        # Procesar comentarios
+        # 2. Procesar comentarios y enviar avance por cada uno
         yield json.dumps({"status": "Procesando comentarios..."}) + "\n"
-        processed_comments = process_comments(comments, presidente, tema, red_social)
+        processed_comments = []
+        for formatted_comment, i, total in process_comments(comments, presidente, tema, red_social):
+            processed_comments.append(formatted_comment)
+            yield json.dumps({
+                "status": f"Procesando comentario {i}/{total}...", 
+                "progress": round((i / total) * 100, 2)
+            }) + "\n"
         print("Comentarios procesados.")
         yield json.dumps({"status": "Comentarios procesados."}) + "\n"
 

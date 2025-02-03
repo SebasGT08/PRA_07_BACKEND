@@ -37,52 +37,47 @@ def translate_text(text, source_lang='auto', target_lang='es'):
         return ' '.join(translated_parts)
 
 def process_comments(comments, presidente, tema, red_social):
-    processed_comments = []
     stopwords_es = set(stopwords.words('spanish'))
+    total = len(comments)
     
     for i, comment in enumerate(comments, start=1):
         # 1. Eliminar saltos de línea, tabulaciones y el carácter ';'
         comment = comment.replace("\n", " ").replace("\t", " ").replace(";", "")
-        # 2. Reemplazar múltiples espacios (o espacios en blanco) por uno solo
+        # 2. Reemplazar múltiples espacios por uno solo
         comment = re.sub(r'\s+', ' ', comment).strip()
 
         # Obtener la fecha actual en formato YYYY-MM-DD HH:MM:SS
         fecha_obtencion = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         
         # 3. Traducir el comentario
-        # En este ejemplo, si la red social es Twitter, no se traduce
         if red_social == 'twitter':
             translated_comment = comment
         else:
             translated_comment = translate_text(comment, source_lang='auto', target_lang='es')
-            # Si se realizó la traducción (el resultado es distinto al texto original),
-            # se le agrega la marca [T]
             if translated_comment != comment:
                 translated_comment = "[T] " + translated_comment
         
-        # 4. Tokenización: convertir a minúsculas y eliminar signos de puntuación
+        # 4. Tokenización y filtrado
         text_for_tokens = translated_comment.lower()
         text_for_tokens = text_for_tokens.translate(str.maketrans('', '', string.punctuation))
         tokens = nltk.word_tokenize(text_for_tokens, language='spanish')
-        
-        # Filtrar tokens: palabras alfabéticas, con al menos 4 caracteres y que no sean stopwords
         filtered_tokens = [
             token for token in tokens
             if token.isalpha() and len(token) >= 4 and token not in stopwords_es
         ]
         
-        # 5. Formatear el comentario con la estructura requerida
+        # 5. Formatear el comentario
         formatted_comment = {
             "id": i,
             "fecha_obtencion": fecha_obtencion,
             "tema": tema,
             "red_social": red_social,
             "presidente": presidente,
-            "comentario": comment,                   # Comentario original (limpio de saltos, tabs y ';')
-            "comentario_limpio": translated_comment,   # Comentario traducido (con [T] si fue traducido) y limpio
-            "tokens": filtered_tokens                # Tokens obtenidos tras la tokenización y filtrado
+            "comentario": comment,                   # Comentario original ya limpio
+            "comentario_limpio": translated_comment,   # Comentario traducido (con [T] si fue traducido)
+            "tokens": filtered_tokens                # Tokens resultantes
         }
         
-        processed_comments.append(formatted_comment)
-    
-    return processed_comments
+        # Emite el comentario procesado junto con el avance actual
+        yield formatted_comment, i, total
+
