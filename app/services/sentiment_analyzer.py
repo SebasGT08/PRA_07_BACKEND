@@ -2,7 +2,7 @@ import ollama
 import re
 
 
-def clasificar_sentimiento(comentario, presidente):
+def clasificar_sentimiento(comentario, presidente, model):
     """
     Clasifica un comentario como 'positivo', 'negativo' o 'neutro' usando el modelo de Ollama.
 
@@ -19,7 +19,7 @@ def clasificar_sentimiento(comentario, presidente):
     }
 
     # Realizar la consulta al modelo
-    respuesta = ollama.chat(model='deepseek-r1:1.5b', messages=[mensaje])
+    respuesta = ollama.chat(model=model, messages=[mensaje])
     # respuesta = ollama.chat(model='deepseek-r1:7b', messages=[mensaje])
 
     # Extraer el contenido de la respuesta

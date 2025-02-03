@@ -14,6 +14,7 @@ def analyze():
     tema = data.get('tema')
     red_social = data.get('red_social')
     max_comments = data.get('max_comments')
+    model = data.get('model') 
 
     def generate():
         # Obtener comentarios
@@ -29,11 +30,11 @@ def analyze():
         yield json.dumps({"status": "Comentarios procesados."}) + "\n"
 
         # Analizar sentimientos
-        yield json.dumps({"status": "Analizando sentimientos..."}) + "\n"
+        yield json.dumps({"status": "Cargando modelo: "+model+"..."}) + "\n"
         analyzed_comments = []
         for i, comment_data in enumerate(processed_comments):
             comentario = comment_data["comentario_limpio"]
-            sentimiento = clasificar_sentimiento(comentario, presidente)
+            sentimiento = clasificar_sentimiento(comentario, presidente, model)
             comment_data["sentimiento"] = sentimiento
             analyzed_comments.append(comment_data)
             yield json.dumps({
