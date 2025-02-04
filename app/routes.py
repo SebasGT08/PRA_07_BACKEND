@@ -51,8 +51,8 @@ def analyze():
         comments_to_analyze = [comment_data["comentario_limpio"] for comment_data in processed_comments]
         total_comments = len(comments_to_analyze)
 
-        # Configurar el Pool de procesos (se puede ajustar el número de procesos si se desea)
-        pool = multiprocessing.Pool()
+        # Configurar el Pool de procesos
+        pool = multiprocessing.Pool(processes=4)
         # Fijamos los argumentos 'presidente' y 'model' con partial para worker_clasificar_sentimiento.
         worker_func = partial(worker_clasificar_sentimiento, presidente=presidente, model=model)
         
